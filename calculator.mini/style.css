@@ -1,0 +1,116 @@
+/* Import Google font - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e0e3eb;
+}
+
+.container {
+  position: relative;
+  max-width: 300px;
+  width: 100%;
+  border-radius: 12px;
+  padding: 10px 20px 10px; /* Reduced padding bottom to fit history section */
+  background: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column; /* Allows vertical stacking */
+}
+
+.display {
+  height: 60px;
+  width: 90%;
+  outline: none;
+  border: none;
+  text-align: right;
+  margin-bottom: 10px;
+  font-size: 25px;
+  color: #000e1a;
+  pointer-events: none;
+}
+
+.buttons {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.buttons button {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #eee;
+  transition: background-color 0.3s, transform 0.1s;
+}
+
+.buttons button:hover {
+  background-color: #ddd;
+}
+
+.buttons button:active {
+  transform: scale(0.99);
+}
+
+.operator {
+  color: #2f9fff;
+}
+
+.history {
+  margin-top: 10px; /* Space between buttons and history */
+  max-height: 150px;
+  overflow-y: auto;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.history h3 {
+  margin-bottom: 10px;
+}
+
+.clear-history {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #ff4040;
+  cursor: pointer;
+}
+
+.clear-history:hover {
+  color: #ff0000;
+}
+
+#history-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.history-item {
+  padding: 5px;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+  color: #333;
+}
+
+.history-item:last-child {
+  border-bottom: none;
+}

@@ -1,0 +1,126 @@
+/* Mengatur gaya untuk seluruh body halaman */
+body {
+  font-family: Arial, sans-serif;  /* Mengatur font untuk seluruh halaman */
+  display: flex;  /* Menggunakan Flexbox untuk layout */
+  justify-content: center;  /* Mengatur konten agar terpusat secara horizontal */
+  align-items: center;  /* Mengatur konten agar terpusat secara vertikal */
+  height: 100vh;  /* Membuat body memiliki tinggi penuh viewport */
+  background-color: #f0f0f0;  /* Memberikan warna latar belakang yang terang pada body */
+}
+
+/* Mengatur gaya untuk kalkulator */
+.calculator {
+  background-color: #fff;  /* Memberikan latar belakang putih pada kalkulator */
+  padding: 20px;  /* Memberikan jarak di dalam kalkulator */
+  border-radius: 10px;  /* Membuat sudut kalkulator membulat */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  /* Memberikan bayangan halus di sekitar kalkulator */
+  width: 280px;  /* Mengatur lebar kalkulator */
+}
+
+/* Mengatur gaya untuk input tampilan kalkulator */
+.display input {
+  width: 95%;  /* Membuat input mengisi 95% dari lebar kalkulator */
+  padding: 10px;  /* Memberikan jarak di dalam input */
+  font-size: 2em;  /* Mengatur ukuran font untuk angka input */
+  text-align: right;  /* Menyusun teks input ke sebelah kanan */
+  border: none;  /* Menghapus border dari input */
+  margin-bottom: 10px;  /* Memberikan jarak di bawah input */
+  border-radius: 5px;  /* Membuat sudut input membulat */
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);  /* Memberikan bayangan pada input agar terlihat lebih dalam */
+}
+
+/* Mengatur gaya untuk tombol kalkulator */
+.buttons {
+  display: grid;  /* Menggunakan grid layout untuk tombol */
+  grid-template-columns: repeat(4, 1fr);  /* Membuat 4 kolom dengan lebar yang sama */
+  gap: 10px;  /* Memberikan jarak antar tombol */
+}
+
+/* Mengatur gaya untuk tombol */
+.buttons button {
+  padding: 20px;  /* Memberikan jarak di dalam tombol */
+  font-size: 1.5em;  /* Mengatur ukuran font pada tombol */
+  border: none;  /* Menghapus border dari tombol */
+  background-color: #eee;  /* Memberikan warna latar belakang abu-abu muda pada tombol */
+  cursor: pointer;  /* Mengubah kursor menjadi pointer saat hover pada tombol */
+  border-radius: 5px;  /* Membuat sudut tombol membulat */
+  transition: background-color 0.3s;  /* Memberikan transisi saat warna tombol berubah */
+}
+
+/* Mengatur efek hover pada tombol */
+.buttons button:hover {
+  background-color: #ddd;  /* Mengubah warna latar belakang tombol menjadi sedikit lebih gelap saat hover */
+}
+
+/* Mengatur gaya untuk riwayat kalkulator */
+.history {
+  margin-top: 20px;  /* Memberikan jarak atas pada riwayat */
+}
+
+/* Mengatur gaya untuk judul riwayat */
+.history h2 {
+  margin: 0;  /* Menghapus margin default */
+  font-size: 1.5em;  /* Mengatur ukuran font untuk judul */
+  margin-bottom: 10px;  /* Memberikan jarak di bawah judul */
+}
+
+/* Mengatur gaya untuk daftar riwayat */
+.history ul {
+  list-style-type: none;  /* Menghapus penomoran atau bullet pada daftar */
+  padding: 0;  /* Menghapus padding dari daftar */
+  margin: 0;  /* Menghapus margin dari daftar */
+}
+
+/* Mengatur gaya untuk setiap item riwayat */
+.history li {
+  background-color: #f8f8f8;  /* Memberikan warna latar belakang abu-abu muda pada item riwayat */
+  padding: 10px;  /* Memberikan jarak di dalam item */
+  border-radius: 5px;  /* Membuat sudut item membulat */
+  margin-bottom: 5px;  /* Memberikan jarak bawah antar item */
+  cursor: pointer;  /* Mengubah kursor menjadi pointer saat hover pada item */
+  transition: background-color 0.3s;  /* Memberikan transisi saat warna latar belakang item berubah */
+}
+
+/* Mengatur efek hover pada item riwayat */
+.history li:hover {
+  background-color: #e0e0e0;  /* Mengubah warna latar belakang item riwayat saat hover */
+}
+
+/* Mengatur gaya untuk header riwayat */
+.history-header {
+  display: flex;  /* Menggunakan Flexbox untuk layout header */
+  align-items: center;  /* Mengatur agar teks dan ikon sejajar secara vertikal */
+  justify-content: space-between;  /* Menyebar konten header agar teks di kiri dan ikon di kanan */
+  margin-bottom: 10px;  /* Memberikan jarak bawah pada header */
+}
+
+/* Mengatur gaya untuk judul di header riwayat */
+.history-header h2 {
+  margin: 0;  /* Menghapus margin default */
+  font-size: 1.5em;  /* Mengatur ukuran font pada judul */
+}
+
+/* Mengatur gaya untuk tombol bersihkan riwayat */
+.clear-history {
+  background: none;  /* Menghapus latar belakang tombol */
+  border: none;  /* Menghapus border tombol */
+  cursor: pointer;  /* Mengubah kursor menjadi pointer saat hover pada tombol */
+  padding: 0;  /* Menghapus padding dari tombol */
+}
+
+/* Gaya untuk ikon sampah */
+.clear-history .icon-trash {
+  width: 30px;  /* Mengatur lebar ikon sampah */
+  height: 30px;  /* Mengatur tinggi ikon sampah */
+  transition: color 0.3s, transform 0.2s;  /* Memberikan transisi pada perubahan warna dan pembesaran */
+}
+
+/* Mengatur efek saat hover pada ikon sampah */
+.clear-history:hover .icon-trash {
+  transform: scale(1.2);  /* Memberikan efek pembesaran saat hover */
+}
+
+/* Mengatur gaya saat ikon sampah diklik */
+.clear-history:active .icon-trash {
+  color: darkred;  /* Mengubah warna ikon sampah saat diklik */
+}

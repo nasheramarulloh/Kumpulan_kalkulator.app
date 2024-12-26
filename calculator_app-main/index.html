@@ -1,0 +1,174 @@
+<?php
+// Load history from file
+$history = [];
+if (file_exists('history.txt')) {
+    $history = file('history.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+}
+
+// Handle AJAX request to save result
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['result'])) {
+    $result = $_POST['result'];
+    $file = fopen('history.txt', 'a');
+    if ($file) {
+        fwrite($file, $result . "\n");
+        fclose($file);
+    }
+    exit; // End script after handling AJAX request
+}
+
+// Handle AJAX request to clear history
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['clearHistory'])) {
+    file_put_contents('history.txt', ''); // Clear the file content
+    exit; // End script after handling AJAX request
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Web</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        // Function to clear display
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+        }
+
+        // Function to append value to display
+        function appendToDisplay(value) {
+            document.getElementById('display').value += value;
+        }
+
+        // Function to handle backspace
+        function backspace() {
+            const display = document.getElementById('display');
+            display.value = display.value.slice(0, -1);
+        }
+
+        // Function to calculate the result with discount
+        function calculateWithDiscount() {
+            const display = document.getElementById('display');
+            try {
+                // Replace percentages (e.g., "50%") with mathematical equivalent "(50 / 100)"
+                const expression = display.value.replace(/(\d+)%/g, '($1 / 100)');
+                const result = eval(expression); // Evaluate the expression
+                display.value = result.toFixed(2); // Display result with 2 decimals
+                addToHistory(`${display.value} = ${result.toFixed(2)}`);
+            } catch (error) {
+                display.value = 'Error';
+            }
+        }
+
+        // Function to add result to history
+        function addToHistory(result) {
+            const historyList = document.getElementById('history');
+            const newItem = document.createElement('li');
+            newItem.textContent = result;
+            newItem.onclick = function() {
+                document.getElementById('display').value = result;
+            };
+            historyList.appendChild(newItem);
+
+            // Send result to server via AJAX
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send('result=' + encodeURIComponent(result));
+        }
+
+        // Function to clear history
+        function clearHistory() {
+            if (confirm('Are you sure you want to clear the history?')) {
+                const historyList = document.getElementById('history');
+                historyList.innerHTML = ''; // Clear UI
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.send('clearHistory=true'); // Clear server history
+            }
+        }
+
+        // Handle keyboard input
+        function handleKeyboardInput(event) {
+            const key = event.key;
+            const validKeys = '0123456789/*-+.%()';
+            if (validKeys.includes(key)) {
+                appendToDisplay(key);
+            } else if (key === 'Enter') {
+                calculateWithDiscount();
+            } else if (key === 'Backspace') {
+                backspace();
+            } else if (key === 'Escape') {
+                clearDisplay();
+            }
+        }
+
+        document.addEventListener('keydown', handleKeyboardInput);
+    </script>
+    <style>
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-header h2 {
+            margin: 0;
+        }
+
+        .history-header button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5em;
+            color: #333;
+        }
+
+        .history-header button:hover {
+            color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display">
+            <input type="text" id="display" disabled>
+        </div>
+        <div class="buttons">
+            <button onclick="clearDisplay()">C</button>
+            <button onclick="backspace()">←</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            <button onclick="appendToDisplay('%')">%</button>
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button onclick="appendToDisplay('/')">÷</button>
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button onclick="appendToDisplay('*')">×</button>
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button onclick="appendToDisplay('-')">-</button>
+            <button onclick="appendToDisplay('0')">0</button>
+            <button onclick="appendToDisplay('00')">00</button>
+            <button onclick="appendToDisplay('+')">+</button>
+            <button onclick="calculateWithDiscount()">=</button>
+        </div>
+        <div class="history">
+            <div class="history-header">
+                <h2>History</h2>
+                <button onclick="clearHistory()" title="Clear History"><i class="fas fa-trash-alt"></i></button>
+            </div>
+            <ul id="history">
+                <?php foreach ($history as $entry): ?>
+                    <li onclick="document.getElementById('display').value = '<?php echo htmlspecialchars($entry); ?>'"><?php echo htmlspecialchars($entry); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
